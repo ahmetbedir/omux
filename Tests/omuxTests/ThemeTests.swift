@@ -4,7 +4,7 @@ import XCTest
 
 final class ThemeTests: XCTestCase {
     private func hex(_ color: NSColor) -> UInt32 {
-        let c = color.usingColorSpace(.calibratedRGB) ?? color
+        let c = color.usingColorSpace(.genericRGB) ?? color
         let r = UInt32((c.redComponent * 255).rounded())
         let g = UInt32((c.greenComponent * 255).rounded())
         let b = UInt32((c.blueComponent * 255).rounded())
