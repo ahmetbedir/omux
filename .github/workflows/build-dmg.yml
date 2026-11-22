@@ -1,0 +1,55 @@
+name: Build DMG
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch, tag, or commit to build (e.g. feat/system-appearance-theme)"
+        type: string
+        default: "main"
+      run_tests:
+        description: "Run swift test before packaging DMG"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-dmg:
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.branch }}
+
+      - name: Swift version
+        run: swift --version
+
+      - name: Run tests
+        if: ${{ inputs.run_tests }}
+        run: swift test
+
+      - name: Build ad-hoc omux.app
+        run: ./build.sh
+
+      - name: Package DMG
+        run: |
+          set -euo pipefail
+          VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" Info.plist)
+          DMG="build/omux-${VERSION}.dmg"
+          STAGE=$(mktemp -d)
+          cp -R "build/omux.app" "$STAGE/"
+          ln -s /Applications "$STAGE/Applications"
+          hdiutil create -volname "omux ${VERSION}" -srcfolder "$STAGE" -ov -format UDZO "$DMG"
+          rm -rf "$STAGE"
+          echo "DMG_PATH=$DMG" >> "$GITHUB_ENV"
+          ls -lh "$DMG"
+
+      - name: Upload DMG artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: omux-dmg
+          path: ${{ env.DMG_PATH }}
+          retention-days: 14
