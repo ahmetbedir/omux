@@ -52,16 +52,18 @@ struct RightPanel: View {
     var body: some View {
         VStack(spacing: 0) {
             // Every tab named when there is room; in a narrow panel only the one that is open.
-            ViewThatFits(in: .horizontal) {
-                tabs(titles: true)
-                tabs(titles: false)
+            HStack(spacing: 0) {
+                ViewThatFits(in: .horizontal) {
+                    tabs(titles: true)
+                    tabs(titles: false)
+                }
+                TitleBarSpacer()
             }
             // The session header carried on across the panel: the same height, the same surface,
             // and tabs drawn as the header draws its sessions.
             .padding(.horizontal, 8)
             .frame(maxWidth: .infinity, alignment: .leading)
             .frame(height: 28)
-            .actsAsTitleBar()
             // A real gap rather than nothing: the split views below extend into any safe area
             // they touch, and the tab bar sits in the title bar's. The point keeps them apart.
             Color.clear.frame(height: 1)

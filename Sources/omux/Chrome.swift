@@ -112,8 +112,19 @@ extension View {
 
     /// For a strip along the window's top. The window has no title bar of its own to click, so
     /// the strip's empty space does what one would: drag the window, and on a double-click fill
-    /// the screen or minimize it. Buttons and tabs on the strip keep their clicks.
+    /// the screen or minimize it. Apply to empty space only (or use `TitleBarSpacer`), because an
+    /// `NSViewRepresentable` background intercepts clicks on SwiftUI buttons above it.
     func actsAsTitleBar() -> some View { background(TitleBarArea()) }
+}
+
+/// Empty space along the window's top strip that drags the window and handles title-bar
+/// double-clicks without covering neighbouring SwiftUI buttons.
+struct TitleBarSpacer: View {
+    var body: some View {
+        Color.clear
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .actsAsTitleBar()
+    }
 }
 
 private struct TitleBarArea: NSViewRepresentable {

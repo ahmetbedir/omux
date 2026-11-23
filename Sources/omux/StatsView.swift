@@ -62,7 +62,7 @@ struct StatsView: View {
                 .foregroundStyle(showSidebar ? .primary : .secondary)
             Image(systemName: "chart.bar.xaxis").foregroundStyle(.tertiary)
             Text("Statistics").font(.system(size: 11, weight: .semibold)).foregroundStyle(.primary)
-            Spacer()
+            TitleBarSpacer()
             if model.loading { ProgressView().controlSize(.mini) }
             Button { model.step(-1) } label: { Image(systemName: "chevron.left") }
                 .help("Previous month")
@@ -87,7 +87,6 @@ struct StatsView: View {
         .padding(.horizontal, 8)
         .padding(.leading, showSidebar ? 0 : sidebarLayout == "rail" ? 68 - ProjectRail.width : 68)
         .frame(height: 28)
-        .actsAsTitleBar()
         .background(Color(nsColor: theme.chrome))
         .overlay(alignment: .bottom) { Hairline() }
     }

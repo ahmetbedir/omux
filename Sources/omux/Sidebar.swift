@@ -171,7 +171,7 @@ struct Sidebar: View {
         VStack(spacing: 0) {
             // Traffic lights occupy the top-left; actions sit on the right.
             HStack(spacing: 2) {
-                Spacer()
+                TitleBarSpacer()
                 Button { if let group = shownGroup, rail { store.newTab(in: group.id) } else { store.newTab() } } label: { Image(systemName: "plus") }
                     .help("New session in current project (⌘T)")
                 if !rail {
@@ -187,7 +187,6 @@ struct Sidebar: View {
             .foregroundStyle(.secondary)
             .padding(.trailing, 8)
             .frame(height: 28)
-            .actsAsTitleBar()
             // The list grows into the title bar's safe area when it touches it, which would put it
             // over the buttons and take their clicks. A 1pt gap keeps it below them.
             Spacer(minLength: 0).frame(height: 1)

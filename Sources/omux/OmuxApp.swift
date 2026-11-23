@@ -748,7 +748,7 @@ struct SessionHeader: View {
                 Text("\(shown.ids.count) panes")
                     .font(.caption2)
                     .foregroundStyle(.secondary)
-                Spacer()
+                TitleBarSpacer()
             } else if let tab = store.selectedTab {
                 let rt = store.runtime[tab.id] ?? TabRuntime()
                 // With the session list closed, the project's sessions are tabs here.
@@ -773,7 +773,7 @@ struct SessionHeader: View {
                 if rt.awaitsPermission {
                     PermissionButtons(tabID: tab.id).controlSize(.mini)
                 }
-                if !tabbed { Spacer() }
+                if !tabbed { TitleBarSpacer() }
                 if store.provider(of: tab) == .codex {
                     CodexAgents(tabID: tab.id, compact: true)
                 } else { AgentPill(tabID: tab.id) }
@@ -799,7 +799,7 @@ struct SessionHeader: View {
                     .help("Start or continue this session")
                 }
             } else {
-                Spacer()
+                TitleBarSpacer()
             }
             if store.shownLayout == nil, let id = store.selectedTabID, SessionViewMode.showsTranscript(id, store: store),
                let transcript = TranscriptModels.shared.existing(id) {
@@ -848,7 +848,6 @@ struct SessionHeader: View {
         .padding(.leading, showSidebar ? 0 : sidebarLayout == "rail" ? 68 - ProjectRail.width : 68)
         // On the window's own surface, level with its buttons: the card under it is the session.
         .frame(height: 28)
-        .actsAsTitleBar()
     }
 }
 
