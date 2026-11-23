@@ -27,7 +27,7 @@ final class ThemeTests: XCTestCase {
         XCTAssertTrue(Theme.darkThemes.contains(.cobalt2))
 
         XCTAssertEqual(hex(theme.background), 0x193549)
-        XCTAssertEqual(hex(theme.chrome), 0x15232D)
+        XCTAssertEqual(hex(theme.chrome), 0x122738)
         XCTAssertEqual(hex(theme.foreground), 0xFFFFFF)
         XCTAssertEqual(hex(theme.caret), 0xFFC600)
         XCTAssertEqual(hex(theme.accent), 0x0088FF)

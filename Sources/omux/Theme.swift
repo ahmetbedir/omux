@@ -67,7 +67,7 @@ enum Theme: String, CaseIterable, Identifiable {
         case .monokai: return (0x272822, 0x1E1F1C, 0xF8F8F2)
         case .rosePine: return (0x191724, 0x1F1D2E, 0xE0DEF4)
         case .everforest: return (0x2D353B, 0x232A2E, 0xD3C6AA)
-        case .cobalt2: return (0x193549, 0x15232D, 0xFFFFFF)
+        case .cobalt2: return (0x193549, 0x122738, 0xFFFFFF)
         case .light: return (0xFBFBFB, 0xEFEFF1, 0x1F1F1F)
         case .solarizedLight: return (0xFDF6E3, 0xEEE8D5, 0x657B83)
         case .catppuccinLatte: return (0xEFF1F5, 0xE6E9EF, 0x4C4F69)
