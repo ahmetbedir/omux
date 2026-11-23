@@ -20,7 +20,7 @@ enum Palette {
 }
 
 enum Theme: String, CaseIterable, Identifiable {
-    case black, dark, graphite, midnight, dracula, nord, oneDark, gruvbox, solarizedDark, catppuccin, tokyoNight, monokai, rosePine, everforest,
+    case black, dark, graphite, midnight, dracula, nord, oneDark, gruvbox, solarizedDark, catppuccin, tokyoNight, monokai, rosePine, everforest, cobalt2,
          light, solarizedLight, catppuccinLatte, githubLight
 
     var id: String { rawValue }
@@ -34,6 +34,7 @@ enum Theme: String, CaseIterable, Identifiable {
         case .catppuccinLatte: return "Catppuccin Latte"
         case .tokyoNight: return "Tokyo Night"
         case .rosePine: return "Rosé Pine"
+        case .cobalt2: return "Cobalt2"
         case .githubLight: return "GitHub Light"
         default: return rawValue.capitalized
         }
@@ -106,6 +107,7 @@ enum Theme: String, CaseIterable, Identifiable {
         case .monokai: return (0x272822, 0x1E1F1C, 0xF8F8F2)
         case .rosePine: return (0x191724, 0x1F1D2E, 0xE0DEF4)
         case .everforest: return (0x2D353B, 0x232A2E, 0xD3C6AA)
+        case .cobalt2: return (0x193549, 0x122738, 0xFFFFFF)
         case .light: return (0xFBFBFB, 0xEFEFF1, 0x1F1F1F)
         case .solarizedLight: return (0xFDF6E3, 0xEEE8D5, 0x657B83)
         case .catppuccinLatte: return (0xEFF1F5, 0xE6E9EF, 0x4C4F69)
@@ -122,6 +124,7 @@ enum Theme: String, CaseIterable, Identifiable {
     var background: NSColor { NSColor(hex: colors.bg) }
     var chrome: NSColor { NSColor(hex: colors.chrome) }
     var foreground: NSColor { NSColor(hex: colors.fg) }
+    var caret: NSColor { self == .cobalt2 ? NSColor(hex: 0xFFC600) : foreground }
 
     /// 16 ANSI colours (normal 0-7, bright 8-15).
     var palette: [SwiftTerm.Color] {
@@ -153,6 +156,9 @@ enum Theme: String, CaseIterable, Identifiable {
         case .everforest:
             hex = [0x4B565C, 0xE67E80, 0xA7C080, 0xDBBC7F, 0x7FBBB3, 0xD699B6, 0x83C092, 0xD3C6AA,
                    0x5C6A72, 0xE67E80, 0xA7C080, 0xDBBC7F, 0x7FBBB3, 0xD699B6, 0x83C092, 0x9DA9A0]
+        case .cobalt2:
+            hex = [0x000000, 0xFF628C, 0x3AD900, 0xFFC600, 0x0088FF, 0xFB94FF, 0x80FCFF, 0xFFFFFF,
+                   0x0050A4, 0xFF628C, 0x3AD900, 0xFFC600, 0x0088FF, 0xFB94FF, 0x80FCFF, 0xFFFFFF]
         case .githubLight:
             hex = [0x24292F, 0xCF222E, 0x116329, 0x4D2D00, 0x0969DA, 0x8250DF, 0x1B7C83, 0x6E7781,
                    0x57606A, 0xA40E26, 0x1A7F37, 0x633C01, 0x218BFF, 0xA475F9, 0x3192AA, 0x8C959F]
@@ -259,7 +265,7 @@ struct TranscriptStyle: Equatable {
 
 extension NSColor {
     convenience init(hex: UInt32) {
-        self.init(calibratedRed: CGFloat((hex >> 16) & 0xFF) / 255,
+        self.init(srgbRed: CGFloat((hex >> 16) & 0xFF) / 255,
                   green: CGFloat((hex >> 8) & 0xFF) / 255,
                   blue: CGFloat(hex & 0xFF) / 255,
                   alpha: 1)
