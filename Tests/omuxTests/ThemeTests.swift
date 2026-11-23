@@ -4,7 +4,7 @@ import XCTest
 
 final class ThemeTests: XCTestCase {
     private func hex(_ color: NSColor) -> UInt32 {
-        let c = color.usingColorSpace(.genericRGB) ?? color
+        let c = color.usingColorSpace(.sRGB) ?? color
         let r = UInt32((c.redComponent * 255).rounded())
         let g = UInt32((c.greenComponent * 255).rounded())
         let b = UInt32((c.blueComponent * 255).rounded())
@@ -29,7 +29,9 @@ final class ThemeTests: XCTestCase {
         XCTAssertEqual(hex(theme.background), 0x193549)
         XCTAssertEqual(hex(theme.chrome), 0x15232D)
         XCTAssertEqual(hex(theme.foreground), 0xFFFFFF)
+        XCTAssertEqual(hex(theme.caret), 0xFFC600)
         XCTAssertEqual(hex(theme.accent), 0x0088FF)
+        XCTAssertEqual(hex(Theme.black.caret), hex(Theme.black.foreground))
 
         let expectedSwatch: [UInt32] = [0xFF628C, 0x3AD900, 0xFFC600, 0x0088FF, 0xFB94FF, 0x80FCFF]
         XCTAssertEqual(theme.swatch.map(hex), expectedSwatch)

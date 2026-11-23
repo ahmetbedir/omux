@@ -110,7 +110,7 @@ final class TermView: LocalProcessTerminalView {
         font = Fonts.terminal()
         nativeBackgroundColor = theme.background
         nativeForegroundColor = theme.foreground
-        caretColor = theme.foreground
+        caretColor = theme.caret
         installColors(theme.palette)
     }
 

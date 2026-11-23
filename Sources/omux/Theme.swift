@@ -84,6 +84,7 @@ enum Theme: String, CaseIterable, Identifiable {
     var background: NSColor { NSColor(hex: colors.bg) }
     var chrome: NSColor { NSColor(hex: colors.chrome) }
     var foreground: NSColor { NSColor(hex: colors.fg) }
+    var caret: NSColor { self == .cobalt2 ? NSColor(hex: 0xFFC600) : foreground }
 
     /// 16 ANSI colours (normal 0-7, bright 8-15).
     var palette: [SwiftTerm.Color] {
@@ -224,7 +225,7 @@ struct TranscriptStyle: Equatable {
 
 extension NSColor {
     convenience init(hex: UInt32) {
-        self.init(calibratedRed: CGFloat((hex >> 16) & 0xFF) / 255,
+        self.init(srgbRed: CGFloat((hex >> 16) & 0xFF) / 255,
                   green: CGFloat((hex >> 8) & 0xFF) / 255,
                   blue: CGFloat(hex & 0xFF) / 255,
                   alpha: 1)
