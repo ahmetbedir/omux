@@ -1522,6 +1522,7 @@ final class Store: ObservableObject {
         cliChildren[id] = nil
         for key in cliChildren.keys { cliChildren[key]?.remove(id) }
         Notifier.shared.clear(tabID: id)
+        Changes.shared.forgetViewed(tab: id)
         browsers.removeValue(forKey: id)?.close()
         if openAgent?.tabID == id { openAgent = nil }
         if openCodexAgent?.tabID == id { openCodexAgent = nil }
