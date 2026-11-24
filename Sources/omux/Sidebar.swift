@@ -187,9 +187,10 @@ struct Sidebar: View {
             .foregroundStyle(.secondary)
             .padding(.trailing, 8)
             .frame(height: 28)
+            .zIndex(1)
             // The list grows into the title bar's safe area when it touches it, which would put it
             // over the buttons and take their clicks. A 1pt gap keeps it below them.
-            Spacer(minLength: 0).frame(height: 1)
+            Color.clear.frame(height: 1)
             // The card starts under the window's buttons, which lie over this column's corner.
             VStack(spacing: 0) {
             if rail, let group = shownGroup { RailProjectTitle(group: group) }

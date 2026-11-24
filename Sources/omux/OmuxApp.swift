@@ -595,6 +595,22 @@ private struct WindowChrome: NSViewRepresentable {
                     parent = view.superview
                 }
             }
+            // Keep the title bar container limited to the traffic-light buttons outside full screen
+            // so AppKit's title-bar drag handling doesn't swallow clicks on the SwiftUI buttons in
+            // the top 28pt strip (NSHostingView.mouseDownCanMoveWindow is true).
+            if let close = window.standardWindowButton(.closeButton),
+               let zoom = window.standardWindowButton(.zoomButton),
+               let titlebar = close.superview,
+               let frameView {
+                let targetWidth = fullScreen ? frameView.bounds.width : zoom.frame.maxX + close.frame.minX
+                var view: NSView? = titlebar
+                while let current = view, current !== frameView {
+                    if abs(current.frame.width - targetWidth) > 0.5 {
+                        current.setFrameSize(NSSize(width: targetWidth, height: current.frame.height))
+                    }
+                    view = current.superview
+                }
+            }
         }
     }
 }
