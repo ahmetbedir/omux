@@ -577,6 +577,9 @@ struct TabMenu: View {
                 if pr.checksResult == .failed {
                     Button("Send Failing Checks to Session") { store.sendFailingChecks(tab.id) }
                 }
+                if pr.conflicts == true {
+                    Button("Ask Session to Resolve Conflicts") { store.sendConflicts(tab.id) }
+                }
             } else if let pr = pulls.requests[tab.id], pr.state == .merged {
                 Button("Delete Merged Worktree…") { store.cleanUpMergedWorktree(tab.id) }
                     .help("#\(pr.number) was merged")
