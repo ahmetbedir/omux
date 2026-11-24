@@ -102,4 +102,9 @@ final class ThemeTests: XCTestCase {
         XCTAssertEqual(brightBlack.green, 0x50 * 257)
         XCTAssertEqual(brightBlack.blue, 0xA4 * 257)
     }
+
+    func testVesperIsDark() {
+        XCTAssertTrue(Theme.darkThemes.contains(.vesper))
+        XCTAssertEqual(Theme.vesper.label, "Vesper")
+    }
 }
