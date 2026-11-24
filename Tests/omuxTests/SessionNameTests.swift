@@ -15,7 +15,15 @@ final class SessionNameTests: XCTestCase {
         XCTAssertNil(TabItem.name(fromTitle: "✳"))
         XCTAssertNil(TabItem.name(fromTitle: "✳ Claude Code"))
         XCTAssertNil(TabItem.name(fromTitle: "claude"))
+        XCTAssertNil(TabItem.name(fromTitle: "claude --session-id 10a1d7e0-1234-5678"))
+        XCTAssertNil(TabItem.name(fromTitle: "zsh"))
+        XCTAssertNil(TabItem.name(fromTitle: "-zsh"))
+        XCTAssertNil(TabItem.name(fromTitle: "bash"))
+        XCTAssertNil(TabItem.name(fromTitle: "~/Code/channel-api-backend-production"))
+        XCTAssertNil(TabItem.name(fromTitle: "/Users/bdr/Code/omux"))
+        XCTAssertNil(TabItem.name(fromTitle: "bdr@TDC-JV972D67HH:~/Code/app"))
         XCTAssertNil(TabItem.name(fromTitle: String(repeating: "a", count: 81)))
+        XCTAssertEqual(TabItem.name(fromTitle: "Email user@example.com: fix bounce"), "Email user@example.com: fix bounce")
     }
 
     func testOnlyMadeUpNamesFollowTheTitle() {

@@ -87,10 +87,19 @@ struct TabItem: Identifiable, Codable, Hashable {
     /// The conversation's topic from a terminal title Claude Code sets, without its status
     /// glyph ("✳ Fix login bug" → "Fix login bug"). nil for titles that aren't a topic.
     static func name(fromTitle title: String) -> String? {
-        let topic = String(title.drop { !$0.isLetter && !$0.isNumber })
+        let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty, !trimmed.hasPrefix("~/"), !trimmed.hasPrefix("/") else { return nil }
+        let topic = String(trimmed.drop { !$0.isLetter && !$0.isNumber })
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !topic.isEmpty, topic.count <= 80, topic.caseInsensitiveCompare("Claude Code") != .orderedSame,
-              topic.caseInsensitiveCompare("claude") != .orderedSame else { return nil }
+        guard !topic.isEmpty, topic.count <= 80 else { return nil }
+        let lower = topic.lowercased()
+        if lower == "claude code" || lower == "claude" || lower.hasPrefix("claude ") { return nil }
+        if ["zsh", "bash", "fish", "sh", "tcsh", "csh", "dash", "ksh", "login"].contains(lower) { return nil }
+        // Shell prompt titles like "user@host:~/project".
+        if let at = topic.firstIndex(of: "@"), let colon = topic[at...].firstIndex(of: ":"),
+           !topic[..<at].contains(" "), !topic[topic.index(after: at)..<colon].contains(" ") {
+            return nil
+        }
         return topic
     }
 

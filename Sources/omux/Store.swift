@@ -1230,7 +1230,7 @@ final class Store: ObservableObject {
                 if $0.title != title { $0.lastActivity = Date() }
                 $0.title = title
             }
-            if runtime[id]?.provider == .claude, tab(id)?.autoName == true,
+            if runtime[id]?.provider == .claude, runtime[id]?.busy == true, tab(id)?.autoName == true,
                let name = TabItem.name(fromTitle: title), tab(id)?.name != name {
                 updateTab(id) { $0.name = name }
             }
