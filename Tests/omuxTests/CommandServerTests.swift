@@ -38,7 +38,7 @@ final class CommandServerTests: XCTestCase {
         defer { server.stop() }
         let path = try XCTUnwrap(server.socketPath)
 
-        let request = try JSONEncoder().encode(CLIRequest(token: server.token, from: "tab-1", command: "status"))
+        let request = try JSONEncoder().encode(CLIRequest(token: server.token(for: "tab-1"), from: "tab-1", command: "status"))
         let line = request + Data([UInt8(ascii: "\n")])
         for _ in 0..<2 {
             let client = try connect(to: path)
