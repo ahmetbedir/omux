@@ -57,6 +57,7 @@ struct RightPanel: View {
                     tabs(titles: true)
                     tabs(titles: false)
                 }
+                .layoutPriority(1)
                 TitleBarSpacer()
             }
             // The session header carried on across the panel: the same height, the same surface,
@@ -64,6 +65,7 @@ struct RightPanel: View {
             .padding(.horizontal, 8)
             .frame(maxWidth: .infinity, alignment: .leading)
             .frame(height: 28)
+            .zIndex(1)
             // A real gap rather than nothing: the split views below extend into any safe area
             // they touch, and the tab bar sits in the title bar's. The point keeps them apart.
             Color.clear.frame(height: 1)
